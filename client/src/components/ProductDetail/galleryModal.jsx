@@ -9,7 +9,7 @@ import InnerImageZoom from 'react-inner-image-zoom';
 class GalleryModal extends React.Component {
   constructor(props) {
     super(props);
-    let image = this.props.selectedPhotos[this.props.selectedIndex].url;
+    let image = this.props.selectedPhotos[this.props.selectedIndex] ? this.props.selectedPhotos[this.props.selectedIndex].url : '';
 
     this.state = {
       expanded: false,
