@@ -65,15 +65,11 @@ app.get('/detailState/*', async (req, res) => {
 
   let optionsDetail = {
     method: req.method,
-    url: base,
-    headers: { Authorization: TOKEN },
-    data: req.body,
+    url: `http://localhost:5000/product/${productId}`,
   };
   let optionsStyle = {
     method: req.method,
-    url: `${base}/styles`,
-    headers: { Authorization: TOKEN },
-    data: req.body,
+    url: `http://localhost:5000/product/${productId}/styles`,
   };
   const detailRequest = axios(optionsDetail);
   const styleRequest = axios(optionsStyle);
