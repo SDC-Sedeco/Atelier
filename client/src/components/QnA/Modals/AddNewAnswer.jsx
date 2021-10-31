@@ -43,8 +43,17 @@ class AddNewAnswer extends React.Component {
           nicknameError: false,
           emailError: false
         });
-        // call the api to submit the question and close the modal
-        this.props.addNewAnswer(this.state.answer, this.state.nickname, this.state.email, this.state.listOfUploadURL);
+        // set all formData
+        let formData = new FormData();
+        for (let imageFile of this.state.listOfImageFile) {
+          formData.append('photos', imageFile);
+        }
+        formData.append('body', this.state.answer);
+        formData.append('name', this.state.nickname);
+        formData.append('email', this.state.email);
+        formData.append('urls', JSON.stringify(this.state.listOfUploadURL));
+
+        this.props.addNewAnswer(formData);
         this.props.onCancel();
         window.location.reload();
       } else {
@@ -89,7 +98,7 @@ class AddNewAnswer extends React.Component {
       formData.append('photos', imageFile);
     }
 
-    axios.post('/photos', formData,
+    axios.post(`/api/qa/questions/${questionId}/answers`, formData,
       {
         headers: {
           'Content-type': 'multipart/form-data'
@@ -143,13 +152,13 @@ class AddNewAnswer extends React.Component {
               <h4>{this.props.productName}: {this.props.questionBody} </h4>
             </div>
             <div className="answer-modal-header-cross">
-              <h1 style={{color: '#fff', cursor: 'pointer'}} onClick={this.props.onCancel}>X</h1>
+              <h1 style={{ color: '#fff', cursor: 'pointer' }} onClick={this.props.onCancel}>X</h1>
             </div>
           </div>
           <div className="answer-modal-main-body">
             <div className="answer-modal-body">
-              <h4>Your answer<span style={{color: 'red'}}>*</span></h4>
-              {this.state.answerError && <ErrorMessage/>}
+              <h4>Your answer<span style={{ color: 'red' }}>*</span></h4>
+              {this.state.answerError && <ErrorMessage />}
               <textarea
                 className="answer-modal-input answer-modal-textarea"
                 value={this.state.answer}
@@ -160,8 +169,8 @@ class AddNewAnswer extends React.Component {
               ></textarea>
             </div>
             <div className="answer-modal-nickname">
-              <h4>What is your nickname<span style={{color: 'red'}}>*</span></h4>
-              {this.state.nicknameError && <ErrorMessage/>}
+              <h4>What is your nickname<span style={{ color: 'red' }}>*</span></h4>
+              {this.state.nicknameError && <ErrorMessage />}
               <input
                 className="answer-modal-input"
                 placeholder="Example: jack543!"
@@ -177,8 +186,8 @@ class AddNewAnswer extends React.Component {
               </div>
             </div>
             <div className="answer-modal-email">
-              <h4>Your email<span style={{color: 'red'}}>*</span></h4>
-              {this.state.emailError && <ErrorMessage/>}
+              <h4>Your email<span style={{ color: 'red' }}>*</span></h4>
+              {this.state.emailError && <ErrorMessage />}
               <input
                 className="answer-modal-input"
                 placeholder="Example: jack@email.com”"
@@ -196,17 +205,17 @@ class AddNewAnswer extends React.Component {
             <div className="answer-modal-upload-photos">
               <div>
                 {this.state.numOfImageUploaded < 5 &&
-                <label htmlFor="upload-photos" className="answer-modal-upload-photos-button">Upload Your Photos</label>}
-                <input id ="upload-photos" style={{visibility: 'hidden'}} type="file" multiple accept=".jpg, .jpeg, .png" onChange={this.handleUploadPhotos}/>
+                  <label htmlFor="upload-photos" className="answer-modal-upload-photos-button">Upload Your Photos</label>}
+                <input id="upload-photos" style={{ visibility: 'hidden' }} type="file" multiple accept=".jpg, .jpeg, .png" onChange={this.handleUploadPhotos} />
               </div>
               <div>
                 {this.state.listOfImageURL.map((imageURL, index) => {
                   return (
-                    <img className="uploaded-images" key={index} src={imageURL} alt={`img-${index}`} onClick={() => this.imageHandler(imageURL)}/>
+                    <img className="uploaded-images" key={index} src={imageURL} alt={`img-${index}`} onClick={() => this.imageHandler(imageURL)} />
                   );
 
                 })}
-                {this.state.showImageModal && <ImageModal source={this.state.clickedImageUrl} onCancel={this.onCancel}/>}
+                {this.state.showImageModal && <ImageModal source={this.state.clickedImageUrl} onCancel={this.onCancel} />}
               </div>
 
             </div>

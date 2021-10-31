@@ -24,8 +24,8 @@ class Question extends React.Component {
 
   componentDidMount() {
     this._isMounted = true;
-    const {formatBody} = this.props;
-    const {question_id: questionId} = this.props.question;
+    const { formatBody } = this.props;
+    const { question_id: questionId } = this.props.question;
     const params = {
       page: 1,
       count: 100
@@ -89,18 +89,18 @@ class Question extends React.Component {
     });
   }
 
-  addNewAnswer(answerBody, name, email, photos) {
-    const data = {
-      body: answerBody,
-      name: name,
-      email: email,
-      photos: photos
-    };
+  addNewAnswer(formData) {
+    // const data = {
+    //   body: answerBody,
+    //   name: name,
+    //   email: email,
+    //   photos: photos
+    // };
 
-    const {formatBody} = this.props;
-    const {question_id: questionId} = this.props.question;
-    const body = formatBody(null, null, null, data);
-    axios.post(`/api/qa/questions/${questionId}/answers`, body.data)
+    // const { formatBody } = this.props;
+    const { question_id: questionId } = this.props.question;
+    // const body = formatBody(null, null, null, data);
+    axios.post(`/api/qa/questions/${questionId}/answers`, formData)
       .then((result) => {
         console.log('Successfully posted a new answer', result.data);
       })
@@ -121,8 +121,8 @@ class Question extends React.Component {
         clickedYes: true
       });
       // call the api to mark it as helpful
-      const {formatBody} = this.props;
-      const {question_id: questionId} = this.props.question;
+      const { formatBody } = this.props;
+      const { question_id: questionId } = this.props.question;
       axios.put(`/api/qa/questions/${questionId}/helpful`)
         .then((result) => {
           console.log('Successful:');
@@ -135,44 +135,44 @@ class Question extends React.Component {
   }
 
   render() {
-    const {question_body: questionBody} = this.props.question;
+    const { question_body: questionBody } = this.props.question;
 
     const allAnswers = this.state.answerList.map((answer) => {
       return (
-        <Answer key={answer.answer_id} answer={answer} formatBody={this.props.formatBody}/>
+        <Answer key={answer.answer_id} answer={answer} formatBody={this.props.formatBody} />
       );
     });
 
     return (
       <div className="individual-question">
         <div className="question-header">
-          <p style={{fontSize: '16px', fontWeight: 'bold'}}>Q: {questionBody} </p>
+          <p style={{ fontSize: '16px', fontWeight: 'bold' }}>Q: {questionBody} </p>
           <div className="question-info">
             <p>Helpful? <a className="answer-modal-yes-handler" onClick={this.yesHandler}>Yes({this.state.numOfYes})</a></p>
-            <p style={{marginLeft: '10px', marginRight: '8px'}}>|</p>
-            <p className="question-show-answer-modal" style={{textDecoration: 'underline', cursor: 'pointer'}} onClick={this.showAnswerModal}>Add Answer</p>
+            <p style={{ marginLeft: '10px', marginRight: '8px' }}>|</p>
+            <p className="question-show-answer-modal" style={{ textDecoration: 'underline', cursor: 'pointer' }} onClick={this.showAnswerModal}>Add Answer</p>
           </div>
           {this.state.showAnswerModal && <AddNewAnswer
             onCancel={this.handleModalCancel}
             addNewAnswer={this.addNewAnswer}
             productName={this.props.productName}
             questionBody={this.props.question.question_body}
-          /> }
+          />}
         </div>
         {this.state.answerList.length <= 2 && this.state.answerList.map((answer) => {
           return (
-            <Answer key={answer.answer_id} answer={answer} formatBody={this.props.formatBody}/>
+            <Answer key={answer.answer_id} answer={answer} formatBody={this.props.formatBody} />
           );
         })}
         {this.state.answerList.length > 2 && this.state.loadMoreAnswer === false &&
-        <div>
-          {this.state.answerList.slice(0, 2).map((answer) => {
-            return (
-              <Answer key={answer.answer_id} answer={answer} formatBody={this.props.formatBody}/>
-            );
-          })}
-          <a id="load-more-answer-1" className="load-answer" onClick={this.handleMoreAnswer}>LOAD MORE ANSWERS</a>
-        </div>
+          <div>
+            {this.state.answerList.slice(0, 2).map((answer) => {
+              return (
+                <Answer key={answer.answer_id} answer={answer} formatBody={this.props.formatBody} />
+              );
+            })}
+            <a id="load-more-answer-1" className="load-answer" onClick={this.handleMoreAnswer}>LOAD MORE ANSWERS</a>
+          </div>
         }
         {this.state.answerList.length > 2 && this.state.loadMoreAnswer &&
           <>
@@ -187,5 +187,5 @@ class Question extends React.Component {
   }
 }
 
-export {Question};
+export { Question };
 export default withInteractionsApi(Question, 'Question and Answers');
