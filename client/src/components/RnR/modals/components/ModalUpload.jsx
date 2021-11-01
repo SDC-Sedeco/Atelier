@@ -38,7 +38,7 @@ class ModalUpload extends React.Component {
 
   render() {
     let images = this.props.photosS.map((item, index) =>
-      <img src={item} alt={item} key={index} className="modal-image"/>
+      <img src={item} alt={item} key={index} className="modal-image" />
     );
 
     if (this.state.count >= 5) {
@@ -53,14 +53,14 @@ class ModalUpload extends React.Component {
         <React.Fragment>
           {images}
           <br />
-          <input className="modalUploadInput" type="file" accept="image/png, image/gif, image/jpeg" onChange={this.fileUploadHandler} name="photos" onClick={this.clicked}/>
+          <input className="modalUploadInput" type="file" accept="image/png, image/gif, image/jpeg" onChange={this.fileUploadHandler} name="photos" onClick={this.clicked} />
         </React.Fragment>
       );
     } else {
       return (
         <React.Fragment>
           {images}
-          <input className="modalUploadInput" type="file" accept="image/png, image/gif, image/jpeg" onChange={this.fileUploadHandler} name="photos" onClick={this.clicked}/>
+          <input className="modalUploadInput" type="file" accept="image/png, image/gif, image/jpeg" onChange={this.fileUploadHandler} name="photos" onClick={this.clicked} />
         </React.Fragment>
       );
     }

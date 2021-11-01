@@ -132,7 +132,8 @@ class AddNewAnswer extends React.Component {
   }
 
   handleUploadPhotos(e) {
-    var uploadURL = 'https://fec-atelier-photo-bucket.s3.amazonaws.com/' + e.target.value.substring(12);
+    var uploadURL = 'https://sdc-qa-atelier-bucket.s3.us-west-1.amazonaws.com/' + e.target.value.substring(12);
+    console.log('photo url', uploadURL);
     var imageSrc = URL.createObjectURL(e.target.files[0]);
     this.setState({
       numOfImageUploaded: this.state.numOfImageUploaded + 1,
