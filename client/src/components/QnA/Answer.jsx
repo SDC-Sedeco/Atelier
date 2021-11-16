@@ -2,6 +2,8 @@ import React from 'react';
 var dayjs = require('dayjs');
 import axios from 'axios';
 import ImageModal from './Modals/ImageModal.jsx';
+const config = require('../../../../.config');
+const QA_BASE_URL = config.QA_BASE_URL;
 
 class Answer extends React.Component {
   constructor(props) {
@@ -26,9 +28,9 @@ class Answer extends React.Component {
         numOfYes: this.state.numOfYes + 1
       });
       // call the answer helpfulness api endpoint
-      const {formatBody} = this.props;
-      const {answer_id: answerId} = this.props.answer;
-      axios.put(`/api/qa/answers/${answerId}/helpful`)
+      const { formatBody } = this.props;
+      const { answer_id: answerId } = this.props.answer;
+      axios.put(`${QA_BASE_URL}/api/qa/answers/${answerId}/helpful`)
         .then((results) => {
           console.log('Successful');
         })
@@ -58,8 +60,8 @@ class Answer extends React.Component {
       reportText: 'Reported'
     });
     // call api endpoint to report the answer
-    const {formatBody} = this.props;
-    const {answer_id: answerId} = this.props.answer;
+    const { formatBody } = this.props;
+    const { answer_id: answerId } = this.props.answer;
     axios.put(`/api/qa/answers/${answerId}/report`)
       .then((results) => {
         console.log('Successfully Reported the answer');
@@ -70,7 +72,7 @@ class Answer extends React.Component {
   }
 
   render() {
-    const {answer} = this.props;
+    const { answer } = this.props;
     const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
       'July', 'August', 'September', 'October', 'November', 'December'
     ];
@@ -82,22 +84,22 @@ class Answer extends React.Component {
     return (
       <div className="answers" key={answer.answer_id}>
         <div className="answers-body">
-          <p style={{fontWeight: 'bold', marginRight: '5px', marginBottom: '5px'}}>A:</p>
+          <p style={{ fontWeight: 'bold', marginRight: '5px', marginBottom: '5px' }}>A:</p>
           <p>
             {answer.body}
           </p>
         </div>
-        {this.state.showImageModal && <ImageModal source={this.state.clickedImageUrl} onCancel={this.onCancel}/>}
+        {this.state.showImageModal && <ImageModal source={this.state.clickedImageUrl} onCancel={this.onCancel} />}
         <div className="answer-photos">
           {answer.photos.map((photo, index) => {
             return (
-              <img className="answer-img" key={photo.id} alt={`img-${index}`} src={photo.url} onClick={() => this.showImageModal(photo.url)}/>
+              <img className="answer-img" key={photo.id} alt={`img-${index}`} src={photo.url} onClick={() => this.showImageModal(photo.url)} />
             );
           })}
         </div>
         <div className="answer-info">
           <div>
-            <p>by {answer.answerer_name === 'Seller' ? <span style={{fontWeight: 'bold'}}>{answer.answerer_name}</span> : answer.answerer_name},</p>
+            <p>by {answer.answerer_name === 'Seller' ? <span style={{ fontWeight: 'bold' }}>{answer.answerer_name}</span> : answer.answerer_name},</p>
           </div>
           <div>
             <p>{month} {dt}, {year}</p>

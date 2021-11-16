@@ -29,7 +29,7 @@
     "test": "jest --coverage",
     "client-dev": "webpack --mode development --watch",
     "server-dev": "npx nodemon server.js",
-    "client-dep": "webpack --mode development ",
+    "build-dev": "webpack --mode development ",
     "client-prod": "webpack --mode=production"
   },
   "repository": {
