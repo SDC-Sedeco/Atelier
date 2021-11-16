@@ -1,6 +1,5 @@
 node_modules
 .config.js
-config.js
 bundle.js
 coverage
 __snapshots__
