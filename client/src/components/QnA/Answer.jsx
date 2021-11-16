@@ -2,7 +2,7 @@ import React from 'react';
 var dayjs = require('dayjs');
 import axios from 'axios';
 import ImageModal from './Modals/ImageModal.jsx';
-const config = require('../../../../.config');
+const config = require('../../../../configEC2');
 const QA_BASE_URL = config.QA_BASE_URL;
 
 class Answer extends React.Component {
@@ -62,7 +62,7 @@ class Answer extends React.Component {
     // call api endpoint to report the answer
     const { formatBody } = this.props;
     const { answer_id: answerId } = this.props.answer;
-    axios.put(`/api/qa/answers/${answerId}/report`)
+    axios.put(`${QA_BASE_URL}/api/qa/answers/${answerId}/report`)
       .then((results) => {
         console.log('Successfully Reported the answer');
       })

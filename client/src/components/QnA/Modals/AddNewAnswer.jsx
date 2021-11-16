@@ -4,7 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ErrorMessage from '../ErrorMessage.jsx';
 import axios from 'axios';
 import ImageModal from './ImageModal.jsx';
-const BASE_URL = require('../../../../../.config.js').BASE_URL;
+const config = require('../../../../../configEC2');
+const QA_BASE_URL = config.QA_BASE_URL;
 
 class AddNewAnswer extends React.Component {
   constructor(props) {
@@ -99,7 +100,7 @@ class AddNewAnswer extends React.Component {
     //   formData.append('photos', imageFile);
     // }
 
-    axios.post(`${BASE_URL}/api/qa/questions/${questionId}/answers`, formData,
+    axios.post(`${QA_BASE_URL}/api/qa/questions/${questionId}/answers`, formData,
       {
         headers: {
           'Content-type': 'multipart/form-data'
