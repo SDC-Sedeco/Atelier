@@ -4,6 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ErrorMessage from '../ErrorMessage.jsx';
 import axios from 'axios';
 import ImageModal from './ImageModal.jsx';
+const config = require('../../../../../configEC2');
+const QA_BASE_URL = config.QA_BASE_URL;
 
 class AddNewAnswer extends React.Component {
   constructor(props) {
@@ -93,12 +95,12 @@ class AddNewAnswer extends React.Component {
         });
       }
     }
-    let formData = new FormData();
-    for (let imageFile of this.state.listOfImageFile) {
-      formData.append('photos', imageFile);
-    }
+    // let formData = new FormData();
+    // for (let imageFile of this.state.listOfImageFile) {
+    //   formData.append('photos', imageFile);
+    // }
 
-    axios.post(`/api/qa/questions/${questionId}/answers`, formData,
+    axios.post(`${QA_BASE_URL}/api/qa/questions/${questionId}/answers`, formData,
       {
         headers: {
           'Content-type': 'multipart/form-data'

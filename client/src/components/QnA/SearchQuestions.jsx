@@ -4,6 +4,8 @@ import QuestionsList from './QuestionsList.jsx';
 import './QnA.css';
 import axios from 'axios';
 import withInteractionsApi from '../HOC/withInteractionApi.jsx';
+const config = require('../../../../configEC2');
+const QA_BASE_URL = config.QA_BASE_URL;
 
 class SearchQuestions extends React.Component {
   constructor(props) {
@@ -19,7 +21,7 @@ class SearchQuestions extends React.Component {
 
   componentDidMount() {
     // Destructing props
-    const {formatBody} = this.props;
+    const { formatBody } = this.props;
     const params =
     {
       product_id: this.props.productId,
@@ -28,7 +30,7 @@ class SearchQuestions extends React.Component {
     };
     const body = formatBody(null, null, params);
 
-    axios.get('/api/qa/questions', body)
+    axios.get(`${QA_BASE_URL}/api/qa/questions`, body)
       .then((results) => {
         this.setState((state) => {
           const sortedData = results.data.results.sort((a, b) => {
@@ -50,7 +52,7 @@ class SearchQuestions extends React.Component {
       });
   }
 
-  changeHandler (e) {
+  changeHandler(e) {
     this.props.sendInteraction('search-questions');
     this.setState((state) => {
       return {
@@ -83,7 +85,7 @@ class SearchQuestions extends React.Component {
     };
 
     const body = this.props.formatBody(null, null, null, data);
-    axios.post('/api/qa/questions', body.data)
+    axios.post(`${QA_BASE_URL}/api/qa/questions`, body.data)
       .then((result) => {
         console.log('Successfully posted a new question', result.data);
       })
@@ -102,7 +104,7 @@ class SearchQuestions extends React.Component {
             <input className="questions-search-input" type="text" placeholder="HAVE A QUESTION? SEARCH FOR ANSWERS..." value={this.state.value}
               onChange={this.changeHandler}
             />
-            <FontAwesomeIcon className="search-icon" icon="search"/>
+            <FontAwesomeIcon className="search-icon" icon="search" />
           </div>
         </div>
         <div>
@@ -118,5 +120,5 @@ class SearchQuestions extends React.Component {
     );
   }
 }
-export {SearchQuestions};
+export { SearchQuestions };
 export default withInteractionsApi(SearchQuestions, 'Questions and Answers');

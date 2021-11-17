@@ -3,6 +3,8 @@ import axios from 'axios';
 import Answer from './Answer.jsx';
 import AddNewAnswer from './Modals/AddNewAnswer.jsx';
 import withInteractionsApi from '../HOC/withInteractionApi.jsx';
+const config = require('../../../../configEC2');
+const QA_BASE_URL = config.QA_BASE_URL;
 
 class Question extends React.Component {
   constructor(props) {
@@ -32,7 +34,7 @@ class Question extends React.Component {
     };
     const body = formatBody(null, null, params);
     const allAnswers = [];
-    axios.get(`/api/qa/questions/${questionId}/answers`, body)
+    axios.get(`${QA_BASE_URL}/api/qa/questions/${questionId}/answers`, body)
       .then((answerList) => {
         const ansList = answerList.data.results;
         const sellerAnswers = ansList.filter((ans) => {
@@ -100,7 +102,7 @@ class Question extends React.Component {
     // const { formatBody } = this.props;
     const { question_id: questionId } = this.props.question;
     // const body = formatBody(null, null, null, data);
-    axios.post(`/api/qa/questions/${questionId}/answers`, formData)
+    axios.post(`${QA_BASE_URL}/api/qa/questions/${questionId}/answers`, formData)
       .then((result) => {
         console.log('Successfully posted a new answer', result.data);
       })
@@ -123,7 +125,7 @@ class Question extends React.Component {
       // call the api to mark it as helpful
       const { formatBody } = this.props;
       const { question_id: questionId } = this.props.question;
-      axios.put(`/api/qa/questions/${questionId}/helpful`)
+      axios.put(`${QA_BASE_URL}/api/qa/questions/${questionId}/helpful`)
         .then((result) => {
           console.log('Successful:');
         })
