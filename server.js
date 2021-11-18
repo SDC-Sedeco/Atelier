@@ -65,11 +65,11 @@ app.get('/detailState/*', async (req, res) => {
 
   let optionsDetail = {
     method: req.method,
-    url: `http://54.196.247.51:5000/product/${productId}`,
+    url: `http://54.147.45.151:8080/product/${productId}`,
   };
   let optionsStyle = {
     method: req.method,
-    url: `http://54.196.247.51:5000/product/${productId}/styles`,
+    url: `http://54.147.45.151:8080/product/${productId}/styles`,
   };
   const detailRequest = axios(optionsDetail);
   const styleRequest = axios(optionsStyle);
