@@ -29,7 +29,7 @@ let StyleSelector = function (props) {
             );
           }}
           className={'style-thumbnail'}
-          src={style.photos[0].thumbnail_url}></img>
+          src={style.photos[0] ? style.photos[0].thumbnail_url : ''}></img>
       </div>
     );
   });
