@@ -54,12 +54,12 @@ app.get('/detailState/*', async (req, res) => {
   console.log('PRODID', req.body);
   let optionsReviews = {
     method: 'GET',
-    url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews?product_id=${productId}&count=100`,
+    url: `http://18.234.34.227:80/reviews?product_id=${productId}&count=100`,
     headers: { Authorization: TOKEN },
   };
   let optionsReviewsMeta = {
     method: 'GET',
-    url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews/meta?product_id=${productId}`,
+    url: `http://18.234.34.227:80/reviews/meta?product_id=${productId}`,
     headers: { Authorization: TOKEN },
   };
 
